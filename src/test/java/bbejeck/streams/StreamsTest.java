@@ -1,5 +1,6 @@
 package bbejeck.streams;
 
+import com.codepoetics.protonpack.StreamUtils;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -16,7 +17,8 @@ import java.util.stream.Stream;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 /**
  * User: Bill Bejeck
  * Date: 4/22/14
@@ -146,6 +148,21 @@ public class StreamsTest {
         Stream<String> values = Stream.of("7","8","9");
         Optional<String> combined = values.reduce((x,y)-> x+":"+y);
         assertThat(combined.get(),is("7:8:9"));
+    }
+    @Test public void
+    take_while_takes_items_while_condition_is_met() {
+        Stream<Integer> infiniteInts = Stream.iterate(0, i -> i + 1);
+        Stream<Integer> finiteInts = StreamUtils.takeWhile(infiniteInts, i -> i < 10);
+
+        assertThat(finiteInts.collect(Collectors.toList()), hasSize(10));
+    }
+
+    @Test public void
+    take_until_takes_items_until_condition_is_met() {
+        Stream<Integer> infiniteInts = Stream.iterate(0, i -> i + 1);
+        Stream<Integer> finiteInts = StreamUtils.takeUntil(infiniteInts, i -> i > 10);
+
+        assertThat(finiteInts.collect(Collectors.toList()), hasSize(11));
     }
 
 

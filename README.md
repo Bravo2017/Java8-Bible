@@ -6,3 +6,4 @@ features in Java 8 and explore the API.
 Added new Proton pack library 
 
 https://github.com/poetix/protonpack
+https://github.com/amaembo/streamex  it is a great library you can use 

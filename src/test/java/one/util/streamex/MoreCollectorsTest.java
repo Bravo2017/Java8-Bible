@@ -18,6 +18,7 @@ package one.util.streamex;
 import static one.util.streamex.TestHelpers.*;
 import static org.junit.Assert.*;
 import static java.util.Arrays.asList;
+import static org.junit.Assert.assertArrayEquals;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -366,7 +367,7 @@ public class MoreCollectorsTest {
             boolean[] expected = new boolean[input.size()];
             for (int i = 0; i < expected.length; i++)
                 expected[i] = input.get(i) > 50;
-            //streamEx(input::stream, supplier -> assertArrayEquals(expected, supplier.get().collect(
+           // streamEx(input::stream, supplier -> assertArrayEquals(expected, supplier.get().collect(
                // MoreCollectors.toBooleanArray(x -> x > 50))));
         });
     }

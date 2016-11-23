@@ -9,10 +9,11 @@ https://github.com/poetix/protonpack
 https://github.com/amaembo/streamex  it is a great library you can use 
 https://github.com/mukadder/java8-code-kata great code for practice 
 https://github.com/hgwood/java8-streams-and-exceptions - a library for exceptions
+https://github.com/benjiman/expressions Is another good library for checked exceptions
 This is branch for testing
 
 
-//new libraray added 
+
 
 # Java8 Code Kata
 [![Build Status](https://travis-ci.org/konohiroaki/java8-code-kata.svg?branch=master)](https://travis-ci.org/konohiroaki/java8-code-kata)

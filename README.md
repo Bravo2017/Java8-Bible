@@ -10,6 +10,7 @@ https://github.com/amaembo/streamex  it is a great library you can use
 https://github.com/mukadder/java8-code-kata great code for practice 
 https://github.com/hgwood/java8-streams-and-exceptions - a library for exceptions
 https://github.com/benjiman/expressions Is another good library for checked exceptions
+https://github.com/mukadder/CollectorEx good collecter library but tests are failing
 This is branch for testing
 
 

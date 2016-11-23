@@ -24,6 +24,17 @@
             <artifactId>spock-core</artifactId>
             <version>0.7-groovy-2.0</version>
         </dependency>
+        <dependency>
+  <groupId>com.github.agzamovr</groupId>
+  <artifactId>collectorex</artifactId>
+  <version>0.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
+<dependency>
+    <groupId>org.assertj</groupId>
+    <artifactId>assertj-core</artifactId>
+    <version>3.5.1</version>
+</dependency>
 <dependency>
   <groupId>one.util</groupId>
   <artifactId>streamex</artifactId>

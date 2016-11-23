@@ -8,6 +8,7 @@ Added new Proton pack library
 https://github.com/poetix/protonpack
 https://github.com/amaembo/streamex  it is a great library you can use 
 https://github.com/mukadder/java8-code-kata great code for practice 
+https://github.com/hgwood/java8-streams-and-exceptions - a library for exceptions
 This is branch for testing
 
 

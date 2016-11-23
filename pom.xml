@@ -5,7 +5,7 @@
     <artifactId>java8-blog</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
-    <name>java8-blog</name>
+    <name>HomeAlone</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
@@ -24,7 +24,17 @@
             <artifactId>spock-core</artifactId>
             <version>0.7-groovy-2.0</version>
         </dependency>
+<dependency>
+  <groupId>one.util</groupId>
+  <artifactId>streamex</artifactId>
+  <version>0.6.3</version>
+</dependency>
 
+<dependency>
+    <groupId>com.codepoetics</groupId>
+    <artifactId>protonpack</artifactId>
+    <version>1.9</version>
+</dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

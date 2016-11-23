@@ -1,4 +1,4 @@
-Java-8
+Added new Java-8
 ======
 
 Source code for exploring the new features of Java 8.  Over time this repo will contain all the source code as I blog about the new

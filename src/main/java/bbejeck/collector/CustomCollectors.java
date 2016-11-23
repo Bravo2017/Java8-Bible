@@ -14,6 +14,7 @@ import java.util.stream.Collector;
  * Date: 10/12/14
  * Time: 1:32 PM
  */
+// this is new commit
 public class CustomCollectors {
     private static final BinaryOperator NOOP_COMBINER = (l, r) -> {
         throw new RuntimeException("Parallel execution not supported");

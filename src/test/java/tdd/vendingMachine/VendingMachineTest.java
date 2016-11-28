@@ -201,24 +201,7 @@ public class VendingMachineTest {
             .isNull();
     }
 
-    @Test
-    public void user_can_press_cancel_to_get_his_money_back() {
-        VendingMachine vendingMachine = Fixtures.getMachineWithColaCosting320OnShelf1AndSelf1Selected();
-
-        vendingMachine.putCoin(CoinType.CENTS_100);
-        vendingMachine.putCoin(CoinType.CENTS_200);
-
-        assertThat(vendingMachine.returnChange())
-            .isNull();
-
-        vendingMachine.cancelOrder();
-
-        assertThat(vendingMachine.returnChange())
-            .containsExactly(CoinType.CENTS_200, CoinType.CENTS_100);
-
-        assertThat(vendingMachine.returnChange())
-            .isNull();
-    }
+   
 
     @Test
     public void when_user_press_cancel_product_is_not_dispensed() {

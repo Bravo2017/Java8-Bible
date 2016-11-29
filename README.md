@@ -13,6 +13,7 @@ https://github.com/benjiman/expressions Is another good library for checked exce
 https://github.com/mukadder/CollectorEx good collecter library but tests are failing
 https://github.com/tdelev/java8-custom-collectors a great site for custom collector
 https://github.com/marcin-chwedczuk/vending-machine-kata.git great example of tdd
+https://github.com/RichardWarburton/java-8-lambdas-exercises - insightful logic
 This is branch for testing
 
 

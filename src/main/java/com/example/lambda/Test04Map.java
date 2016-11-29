@@ -32,22 +32,9 @@ public class Test04Map {
     
     
     // Get sum of ages
-    System.out.println("\n== Calc New Style ==");
-    long totalAge = pl
-            .stream()
-            .filter(search.getCriteria("allPilots"))
-            .map(p -> p.getAge())
-            .sum();
+    
 
-    // Get average of ages
-    OptionalDouble averageAge = pl
-            .parallelStream()
-            .filter(search.getCriteria("allPilots"))
-            .map(p -> p.getAge())
-            .average();
-
-    System.out.println("Total Ages: " + totalAge);
-    System.out.println("Average Age: " + averageAge.getAsDouble());    
+       
     
   }
   

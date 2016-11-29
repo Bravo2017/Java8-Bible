@@ -1,7 +1,5 @@
 package com.example;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
@@ -43,8 +41,8 @@ public class AvoidNullPointerException {
     }
 
     // Use of @NotNull and @Nullable
-    @NotNull
-    public List<String> transformers(@Nullable String filter) {
+    //@NotNull
+    public List<String> transformers(String filter) {
         List result = Collections.EMPTY_LIST;
         return result;
     }

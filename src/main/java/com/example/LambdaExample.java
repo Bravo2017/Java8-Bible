@@ -36,7 +36,7 @@ public class LambdaExample {
         methodParameterReflection();
         typeAnnotations();
         typeInference();
-        defaultAndStaticInterfaceMethods();
+       
         lambdaListener();
         Avengers avengers = lambdaCustomInterface();
         lambdaMethodReference(avengers);
@@ -128,23 +128,7 @@ public class LambdaExample {
         });
     }
 
-    private static void defaultAndStaticInterfaceMethods() {
-        FightSkill example = null;
-        example.punch();
-
-        FightSkill.launchPunch(example);
-
-        Kungfu.launchPunch(example);
-        /*Does not work. Static method only in the scope
-        of the interface that defines it.
-        */
-        example.fightStyle();
-        KungFu kungFu = new KungFu();
-        kungFu.fightStyle(); // print: "Kung Fu"
-        kungFu.punch();      // print: "Kung Fu punch"
-
-        kungFu.spitFire();
-    }
+    
 
     private static void typeInference() {
         // Java 6: declare the type

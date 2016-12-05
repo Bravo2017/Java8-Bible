@@ -743,3 +743,215 @@ var subscription =
 		function onCompleted() {
 			console.log("done");
 		});
+
+
+Using the map method with Observable
+
+ 3:45  JavaScript lesson by Jafar Husain
+Like an array, Observable has a map method that allows us to transform a sequence into a new Observable.
+Now that we've explained how you get data out of an Observable and how you can convert a DOM event into an Observable, let's take a look at how we can use the map function and the other functions to transform Observables into other Observables the same way we use map to transform Arrays into other Arrays.
+
+What if I want to take this click stream and create a point stream? What I want to do is I want to take each one of the event objects that comes out of our click stream. I want to map it into the point, the (x, y) point at which the button was clicked.
+
+If I want to take each item in that collection and I want to transform it into another item, I'm going to use the map method, just like I would if I was taking an Array of numbers and then map them and add one to each of them.
+
+I'm going to map over this. I'm going to get out an event object. I'm going to return an object with an x that's equal to clientX and a y that's equal to the clientY property on the event object. That is going to create me another Observable.
+
+I'm now going to change clicks to be points. I'm just going to subscribe to points instead of clicks. I'm going to alert. I'm going to change this now. It's no longer an event object. It's a point object. I'm going to now change my clicked message so we print out the point.
+
+Now it should only print one point because we're still disposing of our subscription object as soon as the first one is clicked. As I click this, now we see the point on the screen where that button was clicked.
+
+If I attempt to click more, nothing happens because after the first click, we unsubscribed. Just to drive the point home, if I delete this, it will just keep on printing out clicks. What I'll do is I'll put it back in here.
+
+There's one more thing you need to understand about an Observable. An Observable is lazy. What do I mean when I say "Lazy"? Here, notice we created the points Observable by mapping over the clicks Observable. This is just one thing I want to drive home here.
+
+When we map over Arrays, we get Arrays. When we filter Arrays, we get Arrays. When we concatAll Arrays, we get Arrays. When we map over Observables, we get Observables. When we filter Observables, we get Observables and so on and so forth.
+
+As soon as you start with an Observable, you know you're going to have only Observables. As you call map and filter on that Observable, you're just going to create new Observables.
+
+Having made that point, the other point that I want to make is that Observables are lazy. If I comment out...Notice I'm no longer forEach'ing over these points Observable. If I call "Click me," I want you to notice that nothing happens. As a matter of fact, addEventListener, under the hood, has not even been called by Observable.fromEvent.
+
+The way Observable works is it waits until you call forEach to have any side effects, to carry out any side effects whatsoever. What we've done is we've really just built an Observable that promises that when you will call forEach on it, it will hook up an event listener.
+
+When we map over that Observable, we've created another Observable that promises that when we forEach over it, it will forEach over the underlying data source, clicks, and then, as data arrives, will transform that data, using a projection function, into new data. Just simply creating Observables causes nothing to happen.
+
+We have to forEach over the Observable in order for something to happen. That'll become clear,
+ hovar Observable = Rx.Observable;
+
+var button = document.getElementById('button');
+/*
+var handler = function(e) {
+	alert('clicked');
+	button.removeEventListener('click', handler);
+};
+
+button.addEventListener('click', handler);
+*/
+
+var clicks = Observable.fromEvent(button, 'click');
+
+var points = 
+	clicks.map(function(e) {
+		return {x: e.clientX, y: e.clientY};
+	});
+
+var subscription = 
+	points.forEach(
+		function onNext(point) {
+			alert('clicked:' + JSON.stringify(point));
+			subscription.dispose();
+		},
+		function onError(error) {				 		
+			console.log('ERROR!');
+		},
+		function onCompleted() {
+			console.log("done");
+		});
+w that mechanism works, because later on, we're actually going to write our Eown Observable, from scratch, around a simple library. Once again, to drive the point home, I'll run this. We get the points that are clicked.
+Welcome back to the End of the Loop. Last time we learned about the absorbable type. This is what we've been building up to thus far. We've been learning to program without loops so that we can use these methods and these ways of building complex programs on not just arrays, which are synchronous collections, but asynchronous collections like Observable.
+
+The goal here is to teach you to learn to program without loops so that we can apply these methods to asynchronous programming later on, but first of all we have a few methods to learn and we have a few basic skills we need to really drive home and absorb in order to be successful when we move over to asynchronous programing, which is a good deal more complex than synchronous programing.
+
+The first and most important is flattening. Now if you remember a few exercises, we did a flattening exercise in which we went through a array of exchanges and we collected up all of the stocks within each of those exchange where the price was larger than or equal to a hundred. Here's the program down here.
+
+
+In order to flatten without loops what we need to use is the concat all method. The challenge, of course, is that concat all only works on two dimensional arrays, and in this case we have an array of objects which contain arrays.
+
+How do we flatten? Well, we can't flatten that with concat all alone because it only works on arrays of arrays. However, by using map to transform each exchange into the stocks inside of that exchange and then filter those stocks for all those stocks where the price was larger than or equal to a hundred, we were able to use map to transform that array of objects that contain arrays into an array of arrays.
+
+Then we can apply concat all to flatten it out. Finally we use For Each to consume the collection and do something with it, like log it out to the console. Let's check out to see if this works. We run it, and sure enough it does. We see only those stocks with a price larger than or equal to a hundred and the stock NYN is omitted.
+
+This technique of flattening is great. It works. It's something that you're going to need to learn to become very, very familiar with as we go on and move towards async programing, but just to make a hundred percent sure that we really know what we're doing, we're going to try flattening not just two levels of data structure. We're going to try flattening three levels of data structure.
+
+Let's imagine that instead of just an array of objects that are exchanges, each of which contain an array of stocks, we had one more level that we had an array of exchanges, each of which contains an array of stocks, but each one of those stocks contains not just one price but an array of close prices, meaning a particular date and a particular price that it closed at on that particular.
+
+We have three levels. We have array of exchanges. We have an object that represents an exchange which contains an array of stocks. Within each stock we have array of close dates. Let's say that we want to grab the price of all of the stocks on Christmas Eve, the closing price of all the stocks on Christmas Eve. Let's just start, shall we?
+
+I'm going to first start at the very top with exchanges. First I'm going to name the collection I'm creating. I'll call it Christmas Eve Closes. I'm going to first map over all of the exchanges. I'm just going to go ahead and move map to the next line here, because I fully expect there will be operators chained off of it. Then I'm going to map over all of the stocks in each exchange.
+
+Now here is where a lot of developers make a mistake, and that's partly because we as developers aren't necessarily comfortable with dealing with multi-nested collections. We don't like going deep, deep down into collections like this, and so we try and get out of them as soon as possible.
+
+What a lot of developers will do is, faced with this collection, they will just go ahead and filter the close's collection. They'll take stock closes, and they will filter it. They'll look for the close with the date of December and the day of 24th.
+
+They'll assign it to a variable, and then they will want to return their results. In this case I'm going to return the symbol and the price of each stock on Christmas Eve. Where am I going to get the symbol from?
+
+Notice that the stock has been introduced by a disclosure. This map function is going to get executed for every single stock, so I have access to the stock symbol right here. As for the price, I'm almost there. Notice that this Christmas Eve Closes is not just one item. It's actually array that contains one item. That's why I've named it pleural here.
+
+This array will only ever contain one item because no matter how many closes there are, at least assuming this is only for the year 2014, there will only be one date in this collection that matches this criteria.
+
+What a lot of developers will do is just go ahead and pull it out. What's wrong with this? This should work just fine, right? Here's the issue. Now you guys know about Observable. There are some things you just cannot do to an Observable, like synchronously pull a valuable out.
+
+Observables are just like events. You can't simply block and wait for an event to give you an item. While it will work just fine for arrays, it will not work for observables and asynchronous data streams, so we're not going to do it.
+
+Here's what we're going to do instead. We are going to go ahead and return the results of this filter. Instead of just pulling the first value out like so, how are we going to get a variable that is pointing to this object? It's easy. All we have to do is map over this array that contains only one item -- it will only contain the Christmas Eve Close -- and now we have our Christmas Eve Close.
+
+Now inside of here I can return this object because I have access to all of the data that I need. This can be replaced with this. Really the trick to flattening deeply nested structures is to just keep nesting map expressions until you have a variable or function argument, when is basically the same thing here, a variable bound to every single item you need to create your result.
+
+That's the first step in flattening any nested data structure. The last step -- and this is the trickiest --you've got to figure out how many levels of collection deep you are. What we've got here is we actually have a nested array. Christmas Eve Closes is not a flat array. It's a nested array.
+
+Why is that? Well, it has to do with the way that map works. If you take a collection and you map over it, and for every item in that collection you return another collection, you will end up with a two dimensional collection. In this case we have this. Take a look at this code for a second.
+
+If I map over every item in a collection and I just return a regular item, transform that item somehow, we get another flat collection or a collection with the same dimensions as the source collection. As soon as I return an array instead, we end up with a two dimensional collection.
+
+If we notice, that's exactly what I'm doing here. I am mapping over all of the exchanges, and within that map expression I'm returning yet another array because the product of mapping over stocks will be yet another array. Then within this map expression I'm returning yet another array.
+
+Because there are three nested map expressions, I am going to end up with a three dimensional collection. The first step is figuring out how many levels deep your collection is. The next step is to flatten it n-1 times.
+
+If your collection is three dimensional, you need two concat alls. It also matters where you put the concat all. I can't put the concat all here because I want you to notice that this expression by itself is just a one dimensional collection. We're just taking an array of closes, filtering it, and then mapping it not into another collection but just into an object.
+
+This expression, this subexpression by itself, is just a one dimensional collection, which means that concat all will err, will throw. You cannot concat all to a one dimensional collection. However, out here what I've done is for every stock I'm returning an array just like in this example up here.
+
+For every item in an array I am returning yet another array. I therefore must have a two dimensional collection, so I use concat all. It will work on this because this subexpression is a two dimensional collection.
+
+Notice that for every exchange we are returning an array. In this case now it's a flat array because we have applied concat all. So that means we have a two dimensional collection. We've gone from a three dimensional collection to a two dimensional collection. Now we just need one more concat all to flatten it into a flat, one dimensional collection.
+
+Once we've built the collection that we want, Christmas Eve Closes, from the collection that we have, Exchanges, there's only one thing left to do, consume that collection and do something with the data. In this case I'm going to use For Each to consume the collection, and I am going to print it out to the console.
+
+Now what we should expect to see is only the prices for those stocks, for all these stocks, on Christmas Eve. Let's give this a run. No? What did I miss? Oh, I compared get month to 12 instead of 11, and the month is base 0.
+
+If I run this now we should see...we see price. We see the symbol for all of the stocks, and we see a price. Let's go and compare that price to see that it worked. $240.10 for XFX, $521.24 for TNZ, yes, that's the Christmas Eve date. $423.22 for JXJ and $16.82 for NYN.
+
+As we can see, we've managed to flatten any nested data structure. All we need to do is to keep mapping until we have all of the data that we need bound through the closure arguments and then create our result, figure out how many levels deep we are, and apply concat all n-1 times. That's all there is to flattening. Stay tuned.
+var exchanges = [
+  { 
+    name: "NYSE",
+    stocks: [
+      { 
+        symbol: "XFX", 
+        closes: [
+          { date: new Date(2014,11,24), price: 240.10 },
+          { date: new Date(2014,11,23), price: 232.08 },
+          { date: new Date(2014,11,22), price: 241.09 }
+        ]
+      },
+      { 
+        symbol: "TNZ", 
+        closes: [
+          { date: new Date(2014,11,24), price: 521.24 },
+          { date: new Date(2014,11,23), price: 511.00 },
+          { date: new Date(2014,11,22), price: 519.29 }     
+        ]
+      },
+    ]
+  },
+  { 
+    name: "TSX",
+    stocks: [
+      { 
+        symbol: "JXJ", 
+        closes: [
+          { date: new Date(2014,11,24), price: 423.22 },
+          { date: new Date(2014,11,23), price: 424.84 },
+          { date: new Date(2014,11,22), price: 419.72 }
+        ]
+      },
+      { 
+        symbol: "NYN", 
+        closes: [
+          { date: new Date(2014,11,24), price: 16.82 },
+          { date: new Date(2014,11,23), price: 16.12 },
+          { date: new Date(2014,11,22), price: 15.77 }
+        ]
+      },
+    ]
+  }
+];
+
+Array.prototype.concatAll = function() {
+  var results = [];
+  
+  this.forEach(function(subArray) {
+    subArray.forEach(function(item) {
+      results.push(item);
+    });
+  });
+  
+  return results;
+};
+//[1,2,3].map(function(num) { return num + 1; }) -> [2,3,4]
+//[1,2].map(function(num) { return [num + 1, num + 2]; }) -> [[2,3],[3,4]]
+
+var christmasEveCloses =
+  exchanges.
+    map(function(exchange) {
+      return exchange.stocks.
+        map(function(stock) {
+          return stock.closes.
+            filter(function(close) {
+              return close.date.getMonth() === 12 &&
+                close.date.getDate() === 24;
+            }).
+            map(function(close) {
+              return {
+                symbol: stock.symbol,
+                price: close.price
+              };            
+            });
+        }).
+        concatAll();
+    }).
+    concatAll();
+
+christmasEveCloses.forEach(function(christmasEveClose) {
+  console.log(christmasEveClose);
+});

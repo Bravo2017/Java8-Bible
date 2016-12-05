@@ -735,7 +735,7 @@ var subscription =
 	clicks.forEach(
 		function onNext(e) {
 			alert('clicked');
-			subscription.dispose();
+			subscription.disposedd();
 		},
 		function onError(error) {				 		
 			console.log('ERROR!');

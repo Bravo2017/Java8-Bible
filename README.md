@@ -955,3 +955,79 @@ var christmasEveCloses =
 christmasEveCloses.forEach(function(christmasEveClose) {
   console.log(christmasEveClose);
 });
+
+Filter an Array with Truthy Values
+
+ 6:44  JavaScript lesson by Shane Osbourne
+Array filter creates a new array with all elements that pass the test implemented by the provided function. In this lesson we discuss how only a truthy or falsey value is required as the return value to the function, which in turns allows us to be creative in how we perform the filter. We end the lesson by looking at an example showing how chaining multiple array methods together can lead to very nice, declarative code.
+// see console for output!
+
+const lessons = [
+    {
+        title: 'Javascript Arrays in Depth - join',
+        views: 960,
+        tags: ['array', 'join']
+    },
+    {
+        title: 'Javascript Arrays in Depth - concat',
+        views: 1050,
+        tags: ['array', 'concat']
+    },
+    {
+        title: 'Javascript Arrays in Depth - slice',
+        views: 2503,
+        tags: ['array', 'slice']
+    },
+    {
+        title: 'Javascript Functions in Depth - bind',
+        views: 2500,
+        tags: ['functions', 'bind']
+    }
+];
+
+const minViews = 1000;
+const searchTerm = 'array';
+
+const filtered = lessons
+    .filter(x => x.tags.indexOf(searchTerm) > -1)
+    .filter(x => x.views > minViews)
+    .sort((a, b) => b.views - a.views)
+    .map(x => `  <li>${x.title}</li>`)
+    .join('\n');
+
+console.log(`<ul>
+${filtered}
+</ul>`);
+
+Use Some as a Ternary Operator or Conditional
+
+ 5:43  JavaScript lesson by Shane Osbourne
+some returns a boolean value after passing each item in the source array through the test function that you pass in as the first parameter. This makes it well suited to the types of queries that require a simple yes or no answer. In this lesson we look at 2 practical use-cases for some. The first shows how it can be used with a ternary operator to switch a class on an element & the second shows how some can be used in an if conditional.
+// Array.prototype.some()
+
+var tasks = [
+    {
+        title: 'Do laundry',
+        completed: true
+    },
+    {
+        title: 'Feed the cat',
+        completed: true
+    },
+    {
+        title: 'Watch the array lessons on egghead.io',
+        completed: true
+    }
+];
+
+var list = document.querySelector('.task-list');
+list.classList.add(
+        tasks.some(task => task.completed === false)
+        ? 'task-list--uncompleted'
+        : 'task-list--completed'
+);
+
+list.innerHTML = tasks
+   .map(x => x.completed ? `<s>${x.title}</s>` : x.title)
+   .map(x => `<li>${x}</li>`)
+   .join('');
